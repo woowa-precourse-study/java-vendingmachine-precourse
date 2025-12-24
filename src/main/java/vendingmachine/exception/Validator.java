@@ -41,7 +41,7 @@ public interface Validator {
             throw new IllegalArgumentException("입력형식이 올바르지 않습니다.");
         }
     }
-    
+
 }
 
 

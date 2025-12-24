@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import vendingmachine.domain.Coin;
 import vendingmachine.domain.Products;
 import vendingmachine.exception.Validator;
+import vendingmachine.utils.Constants;
 import vendingmachine.utils.Parser;
 import vendingmachine.utils.RandomGenerator;
 
@@ -82,18 +83,32 @@ public class Application {
                     Validator::validatePositiveNumber
             ));
 
+            int remain = Integer.parseInt(num);
+
 
             // 네번째 입력 (n번 반복)
-            System.out.printf("\n투입 금액: %s원\n", num);
-            int inputPrice = Integer.parseInt(num);
-            // TODO: 남은 금액이 상품의 최저 가격보다 적거나, 모든 상품이 소진된 경우 바로 잔돈을 돌려준다.
 
-            System.out.println("구매할 상품명을 입력해 주세요.");
-            String inputProduct = readInputWithRetry(List.of(
-                    Validator::validateNotBlank
-            ));
-            // TODO: 구매할 상품이 존재하는지 확인 필
+            if (!products.validatePurchaseAvailable(remain)) {
+                System.out.printf("\n투입 금액: %s원\n", remain);
+            }
 
+            while (products.validatePurchaseAvailable(remain)) {
+                System.out.printf("\n투입 금액: %s원\n", remain);
+                try {
+                    System.out.println("구매할 상품명을 입력해 주세요.");
+                    String inputProduct = readInputWithRetry(List.of(
+                            Validator::validateNotBlank
+                    ));
+                    products.validateProduct(inputProduct);
+                    int purchasePrice = products.getPurchaseProductAmount(inputProduct);
+                    if (purchasePrice != Constants.INVALID_PURCHASE) {
+                        remain -= purchasePrice;
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+
+            }
 
         } catch (IllegalArgumentException | NoSuchElementException e) { // 입력안함은 여기서 자동 제거
             System.out.println(PREFIX_ERROR + e.getMessage());
