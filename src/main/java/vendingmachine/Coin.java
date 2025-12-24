@@ -1,5 +1,7 @@
 package vendingmachine;
 
+import java.util.Arrays;
+
 public enum Coin {
     COIN_500(500),
     COIN_100(100),
@@ -13,4 +15,22 @@ public enum Coin {
     }
 
     // 추가 기능 구현
+    public static Coin valueOf(int value) {
+
+        return Arrays.stream(Coin.values())
+                .filter(coin -> value == coin.amount)
+                .findAny().orElse(null);
+    }
+
+    public static boolean canGenerate(int price) {
+        return price >= Coin.COIN_10.amount;
+    }
+
+    public int getCount(int price) {
+        return price / this.amount;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
 }
