@@ -1,17 +1,27 @@
 package vendingmachine.domain;
 
-import vendingmachine.domain.vo.Money;
-
 public class VendingMachine {
-    private final Money money;
+    private final Products products;
     private final Coins coins;
 
-    public VendingMachine(int price, Coins coins) {
-        money = Money.won(price);
+    public VendingMachine(Coins coins) {
+        this(null, coins);
+    }
+
+    public VendingMachine(Products products, Coins coins) {
+        this.products = products;
         this.coins = coins;
     }
 
     public static VendingMachine from(int price, CoinGenerator generator) {
-        return new VendingMachine(price, generator.generate(price));
+        return new VendingMachine(generator.generate(price));
+    }
+
+    public Coins getCoins() {
+        return coins;
+    }
+
+    public VendingMachine addProducts(Products products) {
+        return new VendingMachine(products, coins);
     }
 }

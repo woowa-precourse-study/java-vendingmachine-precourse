@@ -6,4 +6,12 @@ public class InputView {
     public static String readChange() {
         return Console.readLine();
     }
+
+    public static String readProduct() {
+        return Console.readLine();
+    }
+
+    public static String readPrice() {
+        return Console.readLine();
+    }
 }
