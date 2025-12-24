@@ -31,7 +31,6 @@ public class Application {
             // 숫자 입력
             String number = readInputWithRetry(List.of(
                     Validator::validateNotBlank,
-                    Validator::validateIsNumber,
                     Validator::validatePositiveNumber
             ));
 
@@ -61,11 +60,15 @@ public class Application {
             });
 
 
-//            // 두번째 입력
-//            String input = readInputWithRetry(List.of(
-//                    Validator::validateNotBlank,
-//                    Validator::validateNotBlank
-//            ));
+            // 두번째 입력
+            System.out.println("상품명과 가격, 수량을 입력해 주세요.");
+            String input = readInputWithRetry(List.of(
+                    Validator::validateNotBlank,
+                    Validator::validatePurchaseInputFormat
+            ));
+
+            // 세번째 입력
+            System.out.println("투입 금액을 입력해 주세요.");
 
         } catch (IllegalArgumentException | NoSuchElementException e) { // 입력안함은 여기서 자동 제거
             System.out.println(PREFIX_ERROR + e.getMessage());
