@@ -1,7 +1,10 @@
 package vendingmachine;
 
 import camp.nextstep.edu.missionutils.Console;
+import vendingmachine.domain.Coin;
+import vendingmachine.domain.Products;
 import vendingmachine.exception.Validator;
+import vendingmachine.utils.Parser;
 import vendingmachine.utils.RandomGenerator;
 
 import java.util.*;
@@ -23,7 +26,6 @@ public class Application {
             System.out.println(e.getMessage());
         }
     }
-
 
     static void run() {
         try {
@@ -67,8 +69,31 @@ public class Application {
                     Validator::validatePurchaseInputFormat
             ));
 
+            //Parser
+            List<String> inputs = Parser.splitStringToListWithSymbols(input, ";");
+
+            Products products = new Products(inputs);
+
+
             // 세번째 입력
             System.out.println("투입 금액을 입력해 주세요.");
+            String num = readInputWithRetry(List.of(
+                    Validator::validateNotBlank,
+                    Validator::validatePositiveNumber
+            ));
+
+
+            // 네번째 입력 (n번 반복)
+            System.out.printf("\n투입 금액: %s원\n", num);
+            int inputPrice = Integer.parseInt(num);
+            // TODO: 남은 금액이 상품의 최저 가격보다 적거나, 모든 상품이 소진된 경우 바로 잔돈을 돌려준다.
+
+            System.out.println("구매할 상품명을 입력해 주세요.");
+            String inputProduct = readInputWithRetry(List.of(
+                    Validator::validateNotBlank
+            ));
+            // TODO: 구매할 상품이 존재하는지 확인 필
+
 
         } catch (IllegalArgumentException | NoSuchElementException e) { // 입력안함은 여기서 자동 제거
             System.out.println(PREFIX_ERROR + e.getMessage());
