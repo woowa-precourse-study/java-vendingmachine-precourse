@@ -5,7 +5,7 @@ import java.util.Map;
 import vendingmachine.Coin;
 
 public abstract class CoinGenerator {
-    
+
     public Coins generate(int price) {
         Map<Coin, Integer> coins = new EnumMap<>(Coin.class);
 

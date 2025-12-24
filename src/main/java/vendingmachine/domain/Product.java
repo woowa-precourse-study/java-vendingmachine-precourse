@@ -14,4 +14,24 @@ public class Product {
     public static Product of(String name, int price, int quantity) {
         return new Product(name, price, quantity);
     }
+
+    public boolean isSoldOut() {
+        return quantity <= 0;
+    }
+
+    public boolean canBuy(int price) {
+        return price >= this.price;
+    }
+
+    public boolean hasName(String productName) {
+        return name.equals(productName);
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Product decreaseQuantity() {
+        return new Product(name, price, quantity - 1);
+    }
 }

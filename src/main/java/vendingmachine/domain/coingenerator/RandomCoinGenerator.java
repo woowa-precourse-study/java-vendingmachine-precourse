@@ -1,13 +1,22 @@
 package vendingmachine.domain.coingenerator;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import vendingmachine.Coin;
 import vendingmachine.domain.CoinGenerator;
 
 public class RandomCoinGenerator extends CoinGenerator {
-    private static final int MINIMUM_VALUE = 10;
 
     @Override
     public int generateNumber(int number) {
-        return Randoms.pickNumberInRange(MINIMUM_VALUE, number);
+
+        List<Integer> coins = Arrays.stream(Coin.values())
+                .map(Coin::getAmount)
+                .filter(amount -> amount <= number)
+                .collect(Collectors.toList());
+
+        return Randoms.pickNumberInList(coins);
     }
 }

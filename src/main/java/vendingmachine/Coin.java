@@ -18,13 +18,16 @@ public enum Coin {
     public static Coin valueOf(int value) {
 
         return Arrays.stream(Coin.values())
-                .sorted((c1, c2) -> c2.amount - c1.amount)
-                .filter(coin -> value >= coin.amount)
+                .filter(coin -> value == coin.amount)
                 .findAny().orElse(null);
     }
 
     public static boolean canGenerate(int price) {
         return price >= Coin.COIN_10.amount;
+    }
+
+    public int getCount(int price) {
+        return price / this.amount;
     }
 
     public int getAmount() {

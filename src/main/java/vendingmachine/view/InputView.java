@@ -14,4 +14,12 @@ public class InputView {
     public static String readPrice() {
         return Console.readLine();
     }
+
+    public static String readUserFee() {
+        return Console.readLine();
+    }
+
+    public static String readProductName() {
+        return Console.readLine();
+    }
 }

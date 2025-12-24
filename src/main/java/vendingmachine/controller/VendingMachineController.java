@@ -15,11 +15,15 @@ public class VendingMachineController {
     public void run() {
         int change = readChange();
         VendingMachine vendingMachine = VendingMachine.from(change, new RandomCoinGenerator());
+        OutputView.printCoins(vendingMachine.getCoins());
 
         List<String> item = readProducts();
         VendingMachine itemVendingMachine = vendingMachine.addProducts(ProductFactory.createProducts(item));
 
-        
+        int fee = readUserFee();
+        Result result = buyProduct(itemVendingMachine, fee);
+
+        OutputView.printResult(result);
     }
 
     private int readChange() {
@@ -38,6 +42,37 @@ public class VendingMachineController {
 
             return InputParser.parseProduct(product);
         });
+    }
+
+    private static int readUserFee() {
+        OutputView.printPrompt(PrintMessage.INPUT_USER_FEE.getMessage());
+        String fee = InputView.readUserFee();
+
+        return InputParser.parseNumber(fee);
+    }
+
+    private Result buyProduct(VendingMachine vendingMachine, int fee) {
+        VendingMachine newVendingMachine = vendingMachine;
+
+        while (true) {
+            OutputView.printFee(fee);
+
+            if (!newVendingMachine.canBuy(fee)) {
+                return new Result(newVendingMachine.getCoins(), fee);
+            }
+
+            String product = retryOnError(() -> {
+                OutputView.printPrompt(PrintMessage.INPUT_BUY_PRODUCT.getMessage());
+                String productName = InputView.readProductName();
+
+                vendingMachine.hasProduct(productName);
+
+                return productName;
+            });
+
+            fee = vendingMachine.buyProduct(fee, product);
+            newVendingMachine = newVendingMachine.buyProduct(product);
+        }
     }
 
     private <T> T retryOnError(Supplier<T> supplier) {
