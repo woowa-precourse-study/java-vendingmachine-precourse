@@ -35,7 +35,7 @@ public interface Validator {
             ip = ip.substring(1, ip.length() - 1);
             List<String> ips = List.of(ip.split(","));
             validateIsAlphabet(ips.get(0));
-            validatePositiveNumber(ips.get(1));
+            validatePriceFormat(ips.get(1));
             validatePositiveNumber(ips.get(2));
         }
     }
@@ -49,6 +49,14 @@ public interface Validator {
     static void validateStartAndEndWithBrackets(String input) {
         if (!input.startsWith("[") || !input.endsWith("]")) {
             throw new IllegalArgumentException("입력형식이 올바르지 않습니다.");
+        }
+    }
+
+    static void validatePriceFormat(String input) {
+        validateIsNumber(input);
+        int value = Integer.parseInt(input);
+        if (value < 100 || value % 10 != 0) {
+            throw new IllegalArgumentException("최소 상품 가격은 100원이며, 1원 단위는 불가능합니다.");
         }
     }
 }
