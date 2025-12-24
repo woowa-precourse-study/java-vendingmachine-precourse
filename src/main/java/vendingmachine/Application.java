@@ -110,9 +110,19 @@ public class Application {
 
             }
 
+            System.out.printf("\n투입 금액: %s원\n잔돈\n", remain);
+            Map<String, Integer> changes = Coin.getChange(remain, coinCount);
+            ;
+            for (String coin : changes.keySet()) {
+                if (changes.get(coin) != 0) {
+                    System.out.printf("%s원 - %d개\n", coin, changes.get(coin));
+                }
+            }
+
         } catch (IllegalArgumentException | NoSuchElementException e) { // 입력안함은 여기서 자동 제거
             System.out.println(PREFIX_ERROR + e.getMessage());
         }
+
 
     }
 

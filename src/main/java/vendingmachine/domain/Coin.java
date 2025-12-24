@@ -1,7 +1,6 @@
 package vendingmachine.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public enum Coin {
     COIN_500(500),
@@ -39,6 +38,17 @@ public enum Coin {
 
     public int getAmount() {
         return amount;
+    }
+
+    public static Map<String, Integer> getChange(int remain, Map<Coin, Integer> coinCounts) {
+        int count = 0;
+        Map<String, Integer> changes = new LinkedHashMap<>();
+        for (Coin coin : Coin.values()) {
+            count = Integer.min(remain / coin.amount, coinCounts.get(coin));
+            changes.put(String.valueOf(coin.amount), count);
+            remain -= coin.amount * count;
+        }
+        return changes;
     }
 
 }
