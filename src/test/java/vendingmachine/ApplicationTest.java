@@ -2,8 +2,6 @@ package vendingmachine;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInListTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
@@ -35,17 +33,6 @@ class ApplicationTest extends NsTest {
                 }
         );
     }
-
-//    @ParameterizedTest
-//    @ValueSource(strings = {"90", "1501"})
-//    void 상품가격_예외_테스트(String text) {
-//        assertSimpleTest(
-//                () -> {
-//                    runException("1500",String.format("[콜라,%s,20];[사이다,1000,10]",text));
-//                    assertThat(output()).contains("[ERROR] 최소 상품 가격은 100원이며, 1원 단위는 불가능합니다.");
-//                }
-//        );
-//    }
 
     @Override
     protected void runMain() {
