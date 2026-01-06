@@ -1,5 +1,6 @@
 package vendingmachine.controller;
 
+import vendingmachine.domain.Changes;
 import vendingmachine.service.Service;
 
 import java.util.function.Supplier;
@@ -20,6 +21,9 @@ public class Controller {
                 inputView::readMachineMoney,
                 "[ERROR] 유효하지 입력입니다. 다시 입력해 주세요."
         );
+
+        Changes changes = service.makeChange(machineMoney);
+        OutputView.printCoins(changes.getAllCoin());
 
 
     }

@@ -1,5 +1,8 @@
 package vendingmachine.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Coin {
     COIN_500(500),
     COIN_100(100),
@@ -17,4 +20,5 @@ public enum Coin {
     public int getAmount() {
         return amount;
     }
+
 }
