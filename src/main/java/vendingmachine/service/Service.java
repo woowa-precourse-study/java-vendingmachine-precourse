@@ -1,9 +1,11 @@
 package vendingmachine.service;
 
-import vendingmachine.domain.Changes;
-import vendingmachine.domain.Coin;
-import vendingmachine.domain.Machine;
+import vendingmachine.domain.*;
+import vendingmachine.exception.Validator;
+import vendingmachine.utils.Parser;
 import vendingmachine.utils.RandomGenerator;
+
+import java.util.List;
 
 public class Service {
 
@@ -17,6 +19,22 @@ public class Service {
             }
         }
         return changes;
+    }
+
+    public ProductGroup getProductGroup(List<String> inputs) {
+        ProductGroup productGroup = new ProductGroup();
+        for (String input: inputs){
+            input=input.substring(1,input.length()-1);
+            List<String> product= Parser.splitBy(input,",");
+
+            if (product.size()!=3){
+                throw new IllegalArgumentException("[ERROR] 입력 형식이 올바르지 않습니다.");
+            }
+            int price = Validator.validateIsNumber(product.get(1));
+            int amount = Validator.validateIsNumber(product.get(2));
+            productGroup.add(new Product(product.get(0),price,amount));
+        }
+        return productGroup;
     }
 
 //    public void startMachine(){

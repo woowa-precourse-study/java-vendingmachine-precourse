@@ -1,14 +1,11 @@
 package vendingmachine.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductGroup {
-    private final List<Product> products;
+    private final List<Product> products=new ArrayList<>();
     private int minimumPrice=0;
-
-    public ProductGroup(List<Product> products) {
-        this.products = products;
-    }
 
     public void add(Product product) {
         products.add(product);
