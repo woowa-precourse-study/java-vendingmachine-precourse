@@ -16,7 +16,7 @@ public class Product {
     }
 
     private void validateRange(int money) {
-        if (money<100) {
+        if (money < 100) {
             throw new IllegalArgumentException("[ERROR] 상품 가격은 최소 100원이어야합니다.");
         }
     }
@@ -27,13 +27,14 @@ public class Product {
         }
     }
 
-    public void isInventoryEnough(){
-        if (inventory==0){
+    public void isInventoryEnough() {
+        if (inventory == 0) {
             throw new IllegalArgumentException("[ERROR] 재고가 부족합니다.");
-        };
+        }
+        ;
     }
 
-    public int decreaseInventory(){
+    public int decreaseInventory() {
         isInventoryEnough();
         inventory--;
         return price;

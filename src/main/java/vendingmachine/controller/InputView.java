@@ -24,7 +24,7 @@ public class InputView {
         String input = readInput(List.of(
                 Validator::validateNotBlank
         ));
-        return Parser.splitBy(input,";");
+        return Parser.splitBy(input, ";");
     }
 
     public int readMoney() {
@@ -45,13 +45,13 @@ public class InputView {
     }
 
     private String readInput(List<Validator> validators) {
-        try{
+        try {
             String input = Console.readLine().trim();
             for (Validator v : validators) {
                 v.validate(input);
             }
             return input;
-        } catch(NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("입력이 비어있습니다.");
         }
 

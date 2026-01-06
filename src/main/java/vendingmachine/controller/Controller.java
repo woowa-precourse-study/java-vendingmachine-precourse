@@ -2,11 +2,8 @@ package vendingmachine.controller;
 
 import vendingmachine.domain.Changes;
 import vendingmachine.domain.Machine;
-import vendingmachine.domain.Product;
 import vendingmachine.domain.ProductGroup;
-import vendingmachine.exception.Validator;
 import vendingmachine.service.Service;
-import vendingmachine.utils.Parser;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -35,17 +32,15 @@ public class Controller {
         });
 
         int payMoney = doRetry(inputView::readMoney);
-        Machine machine = new Machine(changes,productGroup);
+        Machine machine = new Machine(changes, productGroup);
         machine.addMoney(payMoney);
 
 
-
-        while(true){
-            if (!machine.isAvailablePurchase()){
-                int remain=machine.getRemain();
+        while (true) {
+            if (!machine.isAvailablePurchase()) {
+                int remain = machine.getRemain();
                 OutputView.printRemain(remain);
                 OutputView.printChanges(machine.getFinalChange());
-
                 break;
             }
 

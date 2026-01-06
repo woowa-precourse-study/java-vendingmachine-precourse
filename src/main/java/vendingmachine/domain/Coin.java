@@ -21,8 +21,8 @@ public enum Coin {
         return amount;
     }
 
-    public int calculate(int remain){
-        return remain/this.amount;
+    public int calculate(int remain) {
+        return remain / this.amount;
     }
 
 
