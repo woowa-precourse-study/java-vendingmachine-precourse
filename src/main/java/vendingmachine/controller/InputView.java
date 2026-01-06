@@ -36,6 +36,14 @@ public class InputView {
         return Integer.parseInt(input);
     }
 
+    public String readPurchase() {
+        System.out.println("구매할 상품명을 입력해 주세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return input;
+    }
+
     private String readInput(List<Validator> validators) {
         try{
             String input = Console.readLine().trim();

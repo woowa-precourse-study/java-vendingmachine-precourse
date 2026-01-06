@@ -33,9 +33,10 @@ public class Product {
         };
     }
 
-    public void decreaseInventory(){
+    public int decreaseInventory(){
         isInventoryEnough();
         inventory--;
+        return price;
     }
 
     public String getName() {

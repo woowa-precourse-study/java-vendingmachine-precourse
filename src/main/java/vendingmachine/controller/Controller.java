@@ -40,6 +40,19 @@ public class Controller {
 
 
 
+        while(true){
+            if (!machine.isAvailablePurchase()){
+                OutputView.printRemain(machine.getRemain());
+                break;
+            }
+
+            doRetry(() -> {
+                OutputView.printRemain(machine.getRemain());
+                String product = inputView.readPurchase();
+                machine.purchase(product);
+                return product;
+            });
+        }
 
     }
 

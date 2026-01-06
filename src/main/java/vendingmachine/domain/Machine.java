@@ -14,12 +14,17 @@ public class Machine {
         remain+=money;
     }
 
-    public boolean validateAvailablePurchase(){
+    public boolean isAvailablePurchase(){
         return products.isInventoryEnough(0) && products.isEnoughMoney(remain);
     }
 
+    public int getRemain() {
+        return remain;
+    }
+
     public void purchase(String name){
-        // TODO: 하나의 상품 구매
+        int price=products.decrease(name);
+        remain-=price;
     }
 
 

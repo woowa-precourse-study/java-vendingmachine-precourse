@@ -11,4 +11,8 @@ public class OutputView {
         }
         System.out.println("");
     }
+
+    public static void printRemain(int remain){
+        System.out.printf("투입 금액: %s원\n",remain);
+    }
 }

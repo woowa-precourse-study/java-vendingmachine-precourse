@@ -11,8 +11,13 @@ public class ProductGroup {
         products.add(product);
     }
 
-    public void decrease(Product product){
-        product.decreaseInventory();
+    public int decrease(String name){
+        for (Product product:products){
+            if (product.getName().equals(name)){
+                return product.decreaseInventory();
+            }
+        }
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 상품입니다.");
     }
 
     public boolean isInventoryEnough(int amount){
