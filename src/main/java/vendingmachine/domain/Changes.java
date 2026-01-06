@@ -30,14 +30,47 @@ public class Changes {
 
     }
 
-
-
     public Map<Integer,Integer> getAllCoin(){
         Map<Integer,Integer> coins=new LinkedHashMap<>();
         for (Coin coin:changes.keySet()){
             coins.put(coin.getAmount(),changes.get(coin));
         }
         return coins;
+    }
+
+    public Map<Integer,Integer> getChanges(){
+        Map<Integer,Integer> coins=new LinkedHashMap<>();
+
+        for (Coin coin:changes.keySet()){
+            int count=changes.get(coin);
+            if (count!=0){
+                coins.put(coin.getAmount(),count);
+            }
+        }
+        return coins;
+    }
+
+    public int getTotal(){
+        int total=0;
+        for (Coin coin:changes.keySet()){
+            total = coin.getAmount()*changes.get(coin);
+        }
+        return total;
+    }
+
+    private Map<Integer,Integer> calculateChanges(int remain){
+        Map<Integer,Integer> finalChange=new LinkedHashMap<>();
+        for (Coin coin:changes.keySet()){
+            if (remain!=0 || getTotal()>=remain){
+                break;
+            }
+            int count = coin.calculate(remain);
+            if (count!=0){
+                remain -=coin.getAmount()*count;
+                finalChange.put(coin.getAmount(),count);
+            }
+        }
+        return finalChange;
     }
 
 

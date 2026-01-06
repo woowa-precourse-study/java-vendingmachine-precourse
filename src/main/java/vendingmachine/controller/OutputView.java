@@ -15,4 +15,11 @@ public class OutputView {
     public static void printRemain(int remain){
         System.out.printf("투입 금액: %s원\n",remain);
     }
+
+    public static void printChanges(Map<Integer,Integer> changes){
+        System.out.println("잔돈");
+        for (Integer coin:changes.keySet()){
+            System.out.printf("%d원 - %d개\n",coin,changes.get(coin));
+        }
+    }
 }

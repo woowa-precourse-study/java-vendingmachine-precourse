@@ -42,7 +42,10 @@ public class Controller {
 
         while(true){
             if (!machine.isAvailablePurchase()){
-                OutputView.printRemain(machine.getRemain());
+                int remain=machine.getRemain();
+                OutputView.printRemain(remain);
+                OutputView.printChanges(machine.getFinalChange());
+
                 break;
             }
 
@@ -53,7 +56,6 @@ public class Controller {
                 return product;
             });
         }
-
     }
 
     private <T> T doRetry(Supplier<T> action) {

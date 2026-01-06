@@ -1,7 +1,7 @@
 package vendingmachine.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public enum Coin {
     COIN_500(500),
@@ -20,5 +20,10 @@ public enum Coin {
     public int getAmount() {
         return amount;
     }
+
+    public int calculate(int remain){
+        return remain/this.amount;
+    }
+
 
 }

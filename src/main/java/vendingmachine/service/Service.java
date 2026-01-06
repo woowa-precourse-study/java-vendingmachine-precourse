@@ -6,6 +6,7 @@ import vendingmachine.utils.Parser;
 import vendingmachine.utils.RandomGenerator;
 
 import java.util.List;
+import java.util.Map;
 
 public class Service {
 
@@ -37,12 +38,4 @@ public class Service {
         return productGroup;
     }
 
-//    public void startMachine(){
-//        Machine machine=new Machine();
-//        if (machine.validateAvailablePurchase()){
-//            // TODO
-//            return true;
-//        }
-//        return false;
-//    }
 }

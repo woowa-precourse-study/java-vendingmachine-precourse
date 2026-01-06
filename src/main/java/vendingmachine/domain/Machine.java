@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import java.util.Map;
+
 public class Machine {
     private final Changes changes;
     private final ProductGroup products;
@@ -20,6 +22,10 @@ public class Machine {
 
     public int getRemain() {
         return remain;
+    }
+
+    public Map<Integer,Integer> getFinalChange(){
+        return changes.getChanges();
     }
 
     public void purchase(String name){
