@@ -25,7 +25,6 @@ public class Changes {
                 changes.put(coin, changes.get(coin) + 1);
                 return;
             }
-            ;
         }
         throw new IllegalArgumentException("[ERROR] 해당 금액의 동전이 없습니다.");
 
@@ -62,13 +61,16 @@ public class Changes {
     private Map<Integer, Integer> calculateChanges(int remain) {
         Map<Integer, Integer> finalChange = new LinkedHashMap<>();
         for (Coin coin : changes.keySet()) {
-            if (remain != 0 || getTotal() >= remain) {
-                break;
+            int available = changes.get(coin);
+            if (available==0){
+                continue;
             }
-            int count = coin.calculate(remain);
-            if (count != 0) {
-                remain -= coin.getAmount() * count;
-                finalChange.put(coin.getAmount(), count);
+
+            int need = remain/coin.getAmount();
+            int use = Math.min(available,need);
+            if (use>0) {
+                remain -= coin.getAmount() * use;
+                finalChange.put(coin.getAmount(), use);
             }
         }
         return finalChange;
