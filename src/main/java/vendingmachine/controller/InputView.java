@@ -30,7 +30,8 @@ public class InputView {
     public int readMoney() {
         System.out.println("투입 금액을 입력해 주세요.");
         String input = readInput(List.of(
-                Validator::validateNotBlank
+                Validator::validateNotBlank,
+                Validator::validatePositiveNumber
         ));
         return Integer.parseInt(input);
     }

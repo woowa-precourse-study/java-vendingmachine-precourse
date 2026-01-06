@@ -1,6 +1,7 @@
 package vendingmachine.controller;
 
 import vendingmachine.domain.Changes;
+import vendingmachine.domain.Machine;
 import vendingmachine.domain.Product;
 import vendingmachine.domain.ProductGroup;
 import vendingmachine.exception.Validator;
@@ -21,19 +22,22 @@ public class Controller {
     }
 
     public void run() {
-
         int machineMoney = doRetry(
                 inputView::readMachineMoney
-
         );
 
         Changes changes = service.makeChange(machineMoney);
         OutputView.printCoins(changes.getAllCoin());
 
-        ProductGroup productGroup= doRetry(() -> {
+        ProductGroup productGroup = doRetry(() -> {
             List<String> inputs = inputView.readProducts();
             return service.getProductGroup(inputs);
         });
+
+        int payMoney = doRetry(inputView::readMoney);
+        Machine machine = new Machine(changes,productGroup);
+        machine.addMoney(payMoney);
+
 
 
 
