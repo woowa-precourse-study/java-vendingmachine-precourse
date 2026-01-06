@@ -1,7 +1,6 @@
 package vendingmachine.domain;
 
 import vendingmachine.exception.Validator;
-import vendingmachine.utils.Constants;
 import vendingmachine.utils.Parser;
 
 import java.util.ArrayList;
@@ -13,17 +12,22 @@ public class Products {
     public Products(List<String> inputs) {
         for (String input : inputs) {
             Validator.validateStartAndEndWithBrackets(input);
-            List<String> product = Parser.splitStringToListWithSymbols(input.substring(1, input.length() - 1), ",");
-            this.products.add(new Product(product.get(0), product.get(1), product.get(2)));
+            List<String> product = Parser.splitBy(input.substring(1, input.length() - 1), ",");
+            this.products.add(new Product(product.get(0), Integer.parseInt(product.get(1)), Integer.parseInt(product.get(2))));
         }
     }
 
-    public void validateProduct(String inputProduct) {
-        validateContainProduct(inputProduct);
-        validateProductAmountEnough(inputProduct);
+
+    private Product findByName(String name){
+        for (Product product : products) {
+            if (product.getName().equals(name)) {
+                return product;
+            }
+        }
+        throw new IllegalArgumentException("해당 상품이 없습니다.");
     }
 
-    public boolean validatePurchaseAvailable(int price) {
+    public boolean isPurchaseAvailable(int price) {
         int minPrice = Integer.MAX_VALUE;
         int totalAmount = 0;
         for (Product product : products) {
@@ -36,31 +40,9 @@ public class Products {
         return true;
     }
 
-    public int getPurchaseProductAmount(String purchaseProduct) {
-        for (Product product : products) {
-            if (product.getName().equals(purchaseProduct)) {
-                return product.purchase();
-            }
-        }
-        return Constants.INVALID_PURCHASE;
+    public int purchase(String productName) {
+        Product product = findByName(productName);
+        return product.purchase();
     }
-
-    private void validateContainProduct(String purchaseProduct) {
-        for (Product product : products) {
-            if (product.getName().equals(purchaseProduct)) {
-                return;
-            }
-        }
-        throw new IllegalArgumentException("해당 상품이 존재하지 않습니다.");
-    }
-
-    private void validateProductAmountEnough(String inputProduct) {
-        for (Product product : products) {
-            if (product.getName().equals(inputProduct) && product.getAmount() == 0) {
-                throw new IllegalArgumentException("상품 재고가 없습니다.");
-            }
-        }
-    }
-
 
 }

@@ -27,7 +27,7 @@ public class InputView {
                 Validator::validateNotBlank,
                 Validator::validatePurchaseInputFormat
         ));
-        return Parser.splitStringToListWithSymbols(input, ";");
+        return Parser.splitBy(input, ";");
     }
 
     public int readInputMoney() {
@@ -45,6 +45,7 @@ public class InputView {
         System.out.println("구매할 상품명을 입력해 주세요.");
         String inputProduct = readInputWithRetry(List.of(
                 Validator::validateNotBlank
+
         ));
         return inputProduct;
     }

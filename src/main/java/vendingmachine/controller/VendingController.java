@@ -3,7 +3,6 @@ package vendingmachine.controller;
 import vendingmachine.domain.Coin;
 import vendingmachine.domain.Products;
 import vendingmachine.service.VendingService;
-import vendingmachine.utils.Constants;
 
 import java.util.List;
 import java.util.Map;
@@ -28,25 +27,26 @@ public class VendingController {
         Products products = new Products(productInfos);
 
         int remain = inputView.readInputMoney();
-        if (!products.validatePurchaseAvailable(remain)) {
+        if (!products.isPurchaseAvailable(remain)) {
             System.out.printf("\n투입 금액: %s원\n", remain);
         }
-        repeatPurchase(remain, products);
+        remain = repeatPurchase(remain, products);
         outputView.printRemain(remain);
         outputView.printResult(remain, coinCount);
 
     }
 
-    private void repeatPurchase(int remain, Products products) {
-        while (products.validatePurchaseAvailable(remain)) {
+    private int repeatPurchase(int remain, Products products) {
+        while (products.isPurchaseAvailable(remain)) {
             outputView.printRemain(remain);
             String purchaseProduct = inputView.readPurchaseProduct();
-            products.validateProduct(purchaseProduct);
-            int purchasePrice = products.getPurchaseProductAmount(purchaseProduct);
-            if (purchasePrice != Constants.INVALID_PURCHASE) {
-                remain -= purchasePrice;
+            try{
+                remain -= products.purchase(purchaseProduct);
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+                continue;
             }
-
         }
+        return remain;
     }
 }

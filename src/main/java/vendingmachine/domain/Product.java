@@ -1,19 +1,16 @@
 package vendingmachine.domain;
 
-import vendingmachine.exception.Validator;
-
 public class Product {
     private final String name;
     private final int price;
     private int amount;
 
-    public Product(String name, String price, String amount) {
+    public Product(String name, int price, int amount) {
         validateIsAlphabet(name);
         validatePriceFormat(price);
-        Validator.validatePositiveNumber(amount);
         this.name = name;
-        this.price = Integer.parseInt(price);
-        this.amount = Integer.parseInt(amount);
+        this.price = price;
+        this.amount = amount;
     }
 
     private void validateIsAlphabet(String input) {
@@ -22,10 +19,8 @@ public class Product {
         }
     }
 
-    private void validatePriceFormat(String input) {
-        Validator.validateIsNumber(input);
-        int value = Integer.parseInt(input);
-        if (value < 100 || value % 10 != 0) {
+    private void validatePriceFormat(int input) {
+        if (input < 100 || input % 10 != 0) {
             throw new IllegalArgumentException("최소 상품 가격은 100원이며, 1원 단위는 불가능합니다.");
         }
     }
